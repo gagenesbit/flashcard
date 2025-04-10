@@ -1,0 +1,17 @@
+<div class="card">
+    
+    <li class="card">
+        <br>
+        <input type='text' required placeholder='Side 1' name="question[]"> 
+        <input type="text" required placeholder="Side 2" name="answer[]">
+    </li>
+</div>
+
+<button 
+    id="replaceme"
+    type="button"
+    hx-get="/createcardtemplate"
+    hx-target="#replaceme"
+    hx-swap="outerHTML">
+    Add a card
+</button>

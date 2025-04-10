@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flashcard App</title>
+    <link rel="stylesheet" href="/static/pico.blue.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/study.css">
+    <script src="/scripts/study.js" defer></script>
+
+</head>
+<body>
+    <a href="/home"><img src="/static/img/book.svg" alt="Book svg"></a>
+    
+
+   <h1>Study {{.Deck.Name}}</h1>
+
+   <div id="cardContainer">
+        <p id="cardText">placeholder text</p>
+   </div>
+   
+    <div id="buttonContainer">
+        <button onclick="previousCard()">Previous</button>
+        <button onclick="nextCard()">Next</button>
+   </div>
+   
+
+
+</body>
+</html>

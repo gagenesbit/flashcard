@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flashcard App</title>
+    <link rel="stylesheet" href="../static/pico.blue.css">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../static/createDeck.css">
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+</head>
+<body>
+    <h1>Create a new Flashcard Deck!</h1>
+    <a href="/">cancel</a>
+    <form action="/createdeck" method="post">
+        <button  id="createButton" type="submit">Create Deck</button>
+        <input type="text" required placeholder="Enter your deck name here" name="deck_name">
+        <input type="text" required placeholder="Enter your deck description here" name="description">
+        <h3>Cards</h3>
+        <ol id="cards">
+            
+            <div id="addCardButtonContainer">
+                <button id="replaceme"
+                        type="button"
+                        hx-get="/createcardtemplate"
+                        hx-target="#replaceme"
+                        hx-swap="outerHTML">
+                    
+                        Add a card
+                </button>
+            </div>
+            
+        </ol>
+        
+    </form>
+</body>
+</html>

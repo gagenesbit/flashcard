@@ -1,0 +1,32 @@
+body{
+    width: 80%;
+    margin: auto;
+    padding-top: 50px;
+    
+}
+h1{
+    text-align: center;
+}
+
+#deckList{
+    list-style: none !important;
+}
+.deckListing{
+    background-color: #2b3447;
+    padding: 16px;
+    padding-left: 32px;
+    border-radius: 8px;
+    margin: 16px;
+}
+.deckListing:hover{
+    background-color: #444c5d;
+    border: solid 2px #007a50;
+}
+button{
+    color: white;
+}
+a{
+    color: white;
+}
+
+

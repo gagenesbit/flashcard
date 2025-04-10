@@ -1,0 +1,57 @@
+
+#deckTitle{
+    color: #009360;
+}
+#header{
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+
+
+#createButton{
+    width: 150px;
+    float: right;
+}
+#studyButton{
+    width: 220px;
+    float: right;
+    margin-bottom: 100px;
+}
+
+/*This removes the indentation of the list*/
+ul, ol {
+    padding-left: 0;
+    margin-left: 0;
+}
+.cards {
+    padding-left: 20px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+
+}
+
+.card{
+    background-color: #2b3447;
+    width: 90%;
+    padding: 32px;
+    
+    border-radius: 8px;
+    margin: 16px;
+}
+
+
+
+#addCardButtonContainer{
+    text-align: center;
+}
+
+
+.cardSideText{
+    background-color: #444c5d;
+    padding: 8px;
+    padding-left: 64px;
+    border-radius: 8px;
+    
+}

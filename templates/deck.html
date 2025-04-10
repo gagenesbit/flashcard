@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flashcard App</title>
+    <link rel="stylesheet" href="/static/pico.blue.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/createDeck.css">
+</head>
+<body>
+    <a href="/home"><img src="/static/img/book.svg" alt="Book svg"></a>
+    <div id="header">
+        <h1 id="deckTitle">{{.Deck.Name}}</h1>
+        <p>{{.Deck.Description}}</p>
+    </div>
+   
+   
+   <button id="studyButton"><a href="/deck/study/{{.Deck.ID}}">Study This Deck</a></button>
+    <br>
+   <h3>Cards</h3>
+
+
+   <ul id="cards">
+    {{ range .Cards }}
+        <!-- Each card should be an <li> element inside the <ol> -->
+        <li class="card">
+            <br>
+            <h4>Side 1:</h4>  
+            <p class="cardSideText">{{ .Question }}</p>
+            <h4>Side 2:</h4>  
+            <p class="cardSideText">{{ .Answer }}</p>
+        </li>
+    {{ end }}
+</ul>
+
+
+</body>
+</html>
