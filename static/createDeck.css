@@ -19,6 +19,14 @@
     margin-bottom: 100px;
 }
 
+#editButton{
+    background-color: #1b3eb1;
+    border: none;
+}
+#editButton:hover{
+    background-color: #142d80;
+}
+
 /*This removes the indentation of the list*/
 ul, ol {
     padding-left: 0;

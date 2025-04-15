@@ -43,6 +43,10 @@ func main() {
 		c.Redirect(http.StatusSeeOther, "/home")
 	})
 
+	app.GET("/deck/0", func(c *gin.Context) {
+		c.Redirect(http.StatusSeeOther, "/home")
+	})
+
 	app.GET("/deck/:id", func(c *gin.Context) {
 		deckID, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
@@ -59,6 +63,22 @@ func main() {
 		})
 	})
 
+	app.POST("/deck/edit/:id", func(c *gin.Context) {
+		deckID, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			fmt.Println("error strconv")
+		}
+		questions := c.PostFormArray("question[]")
+		answers := c.PostFormArray("answer[]")
+		deleteAllCardsInDeck(deckID)
+		addCardsToDeck(deckID, questions, answers)
+		if err != nil {
+			fmt.Println("error getting deck and cards")
+		}
+
+		c.Redirect(http.StatusSeeOther, "/deck/:id")
+	})
+
 	app.GET("/deck/study/:id", func(c *gin.Context) {
 		deckID, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
@@ -69,6 +89,22 @@ func main() {
 			fmt.Println("error getting deck and cards")
 		}
 		c.HTML(200, "study.html", gin.H{
+			"Deck":  deck,
+			"Cards": cards,
+		})
+	})
+
+	app.GET("/deck/edit/:id", func(c *gin.Context) {
+		deckID, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			fmt.Println("error strconv")
+		}
+		deck, cards, err := getDeckById(deckID)
+		if err != nil {
+			fmt.Println("error getting deck and cards")
+		}
+
+		c.HTML(200, "editDeck.html", gin.H{
 			"Deck":  deck,
 			"Cards": cards,
 		})

@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Flashcard App</title>
+
+    <link rel="icon" type="image/svg" href="/static/img/book.svg">
+
+
     <link rel="stylesheet" href="/static/pico.blue.css">
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="stylesheet" href="/static/study.css">
     <script src="/scripts/study.js" defer></script>
+    
+    <link rel="stylesheet" href="/static/notyf.min.css">
+    <script src="/scripts/notyf.min.js"></script>
 
 </head>
 <body>
@@ -15,9 +22,10 @@
     
 
    <h1>Study {{.Deck.Name}}</h1>
-
+   <a href="/deck/{{.Deck.ID}}">Back To Deck</a>
+    <button id="shuffleButton" onclick="shuffleCards()"><img src="/static/img/shuffle.svg" alt="shuffle Icon"></button>
    <div id="cardContainer">
-        <p id="cardText">placeholder text</p>
+        <p id="cardText"></p>
    </div>
    
     <div id="buttonContainer">

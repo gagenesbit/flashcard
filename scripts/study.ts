@@ -1,3 +1,8 @@
+declare var Notyf: any;
+
+
+
+
 let iter= 0;
 let cards: any[] = [];
 let cardText: HTMLParagraphElement;
@@ -34,6 +39,22 @@ window.onload = () => {
     
     });
 };
+
+//This is an implementation of the Fisher-Yates shuffle algorithm 
+//https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+function shuffleCards(): void{
+    console.log("Shuffling cards")
+    for(var i=cards.length-1;i>0;i--){
+        let j=Math.floor(Math.random()*(i+1))
+        let temp=cards[i]
+        cards[i]=cards[j]
+        cards[j]=temp
+    }
+    renderCard()
+    var notyf = new Notyf();
+    notyf.success('Cards Shuffled');
+}
+
 
 function nextCard(): void{
     if(iter+1<cards.length){

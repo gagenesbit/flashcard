@@ -75,6 +75,14 @@ func initDB() {
 	fmt.Println("Database and table are ready!")
 }
 
+func deleteAllCardsInDeck(deckID int) {
+	removeDeckSQL := "DELETE FROM cards WHERE deckID = ?;"
+	_, err := db.Exec(removeDeckSQL, deckID)
+	if err != nil {
+		log.Fatal("Error Removing all cards from deck:", err)
+	}
+}
+
 func createNewDeck(deckName string, description string, questions []string, answers []string) {
 	var err error
 	insertDeckSQL := "INSERT INTO decks (name, description) VALUES (?, ?);"

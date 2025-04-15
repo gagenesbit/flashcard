@@ -1,0 +1,27 @@
+<form action="/deck/edit/{{.Deck.ID}}" method="post">
+    <button id="editButton">Save Changes</button>
+
+    <ul id="cards" hx-target="this" hx-swap="outerHTML">
+        
+        {{ range .Cards }}
+            
+            <li class="card">
+                <br>
+                <h4>Side 1:</h4>  
+                <input class="cardSideText" value="{{ .Question }}" name="question[]"></input>
+                <h4>Side 2:</h4>  
+                <input class="cardSideText" value="{{ .Answer }}" name="answer[]"></input>
+            </li>
+        {{ end }}
+        <div id="addCardButtonContainer">
+            <button id="replaceme"
+                    type="button"
+                    hx-get="/createcardtemplate"
+                    hx-target="#replaceme"
+                    hx-swap="outerHTML">
+                
+                    Add a card
+            </button>
+        </div>
+    </ul>
+</form>

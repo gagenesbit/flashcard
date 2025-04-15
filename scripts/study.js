@@ -26,6 +26,20 @@ window.onload = function () {
         }
     });
 };
+//This is an implementation of the Fisher-Yates shuffle algorithm 
+//https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+function shuffleCards() {
+    console.log("Shuffling cards");
+    for (var i = cards.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }
+    renderCard();
+    var notyf = new Notyf();
+    notyf.success('Cards Shuffled');
+}
 function nextCard() {
     if (iter + 1 < cards.length) {
         iter++;
