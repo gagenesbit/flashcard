@@ -1,71 +1,102 @@
+//Imports the Notyf library
 declare var Notyf: any;
 
 
 
-
+//Initalize global variables
 let iter= 0;
 let cards: any[] = [];
-let cardText: HTMLParagraphElement;
+let card:HTMLDivElement;
+let cardContainer:HTMLDivElement;
+let frontText: HTMLParagraphElement;
+let backText: HTMLParagraphElement;
+let flipped=false;
+
+//Waits for DOM to load
 window.onload = () => {
+    //Locates relevant elements from DOM
+    cardContainer = document.getElementById('cardContainer') as HTMLDivElement;
+    card = document.getElementById('card') as HTMLDivElement;
+    frontText = document.getElementById('frontText') as HTMLParagraphElement;
+    backText = document.getElementById('backText') as HTMLParagraphElement;
 
-    const cardContainer = document.getElementById('cardContainer') as HTMLDivElement;
-    cardText = document.getElementById('cardText') as HTMLParagraphElement;
-
-    //Get the DeckID from the URl
+    //Isolates Deck ID from URL
     const urlPath = window.location.pathname;
     const deckID = urlPath.split('/').pop();
 
-    //Call the api to get cards for this deck
+    //Fetches all cards from the specified deck from the api endpoint
     fetch(`/api/cards/${deckID}`)
+        //Translates the response to JSON
         .then(response => response.json())
         .then(data => {
+            //Assigns the JSON data to the cards variable
             cards=data;
-            cardText.innerHTML=`${data[iter].Question}`;
+            //Renders the card text
+            renderCard()
         })
         .catch(error => {
             console.error('Error fetching cards:', error);
-        });
-   
+        })
 
-    
 
-    cardContainer.addEventListener('click', () => {
-        if(cardText.innerHTML==`${cards[iter].Question}`){
-            cardText.innerHTML=`${cards[iter].Answer}`;
+    //Adds an event listener for keyboard shortcuts
+    document.addEventListener("keyup", function(event) {
+        
+        //Will flip card on space bar press
+        if (event.key === " ") {
+          flipCard(cardContainer)
         }
-        else{
-            cardText.innerHTML=`${cards[iter].Question}`;
+        //Switches the visible card to the previous card on left arrow press
+        if (event.key === "ArrowLeft") {
+          previousCard()
         }
-    
-    });
+        //Switches the visible card to the next card on right arrow press
+        if (event.key === "ArrowRight") {
+            nextCard()
+        }
+        //Shuffles the cards on s key press
+        if (event.key === "s") {
+            shuffleCards()
+        }
+      });
+
+
 };
 
 //This is an implementation of the Fisher-Yates shuffle algorithm 
 //https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
 function shuffleCards(): void{
-    console.log("Shuffling cards")
+    //Makes the front of the card visible before the shuffle takes place
+    initalizeCardState()
+
+    //Iterates through card array
     for(var i=cards.length-1;i>0;i--){
+        //Finds a random index between 0 and i
         let j=Math.floor(Math.random()*(i+1))
+        //Swaps the location of the cards at index i and index j
         let temp=cards[i]
         cards[i]=cards[j]
         cards[j]=temp
     }
+    //Rerenders card text
     renderCard()
+    //Notifies user that cards were shuffled
     var notyf = new Notyf();
     notyf.success('Cards Shuffled');
 }
 
-
+//Progresses the visible card to the next card in cards
 function nextCard(): void{
-    if(iter+1<cards.length){
-        iter++;
-    }
-    else{
-        iter=0;
-    }
+    initalizeCardState()
+    //Loops back to index 0 if iter goes out of the bounds of cards
+    iter=(iter+1)%cards.length
     renderCard()
 }
+//Progresses the visible card to the next card in cards
 function previousCard(): void{
+    initalizeCardState()
+
+    //Loops back to index 0 if iter goes out of the bounds of cards
     if(iter>0){
         iter--;
     }
@@ -75,6 +106,26 @@ function previousCard(): void{
     renderCard()
 }
 
+//Displays the current cards text on the DOM
 function renderCard(): void {
-    cardText.innerHTML=`${cards[iter].Question}`;
+    frontText.innerHTML=`${cards[iter].Question}`;
+    backText.innerHTML=`${cards[iter].Answer}`;
 }
+
+//Switches the card text and triggers the flipping animation 
+function flipCard(container: HTMLDivElement) {
+    flipped=!flipped;
+    if (card) {
+        //Toggles flipped class on the card
+        card.classList.toggle('flipped');
+    }
+}
+
+//Sets the front of the card to be visible regarless of current state
+function initalizeCardState(){
+    if(flipped){
+        flipCard(cardContainer)
+    }
+}
+
+

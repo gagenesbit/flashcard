@@ -1,55 +1,85 @@
+//Initalize global variables
 var iter = 0;
 var cards = [];
-var cardText;
+var card;
+var cardContainer;
+var frontText;
+var backText;
+var flipped = false;
+//Waits for DOM to load
 window.onload = function () {
-    var cardContainer = document.getElementById('cardContainer');
-    cardText = document.getElementById('cardText');
-    //Get the DeckID from the URl
+    //Locates relevant elements from DOM
+    cardContainer = document.getElementById('cardContainer');
+    card = document.getElementById('card');
+    frontText = document.getElementById('frontText');
+    backText = document.getElementById('backText');
+    //Isolates Deck ID from URL
     var urlPath = window.location.pathname;
     var deckID = urlPath.split('/').pop();
-    //Call the api to get cards for this deck
+    //Fetches all cards from the specified deck from the api endpoint
     fetch("/api/cards/".concat(deckID))
+        //Translates the response to JSON
         .then(function (response) { return response.json(); })
         .then(function (data) {
+        //Assigns the JSON data to the cards variable
         cards = data;
-        cardText.innerHTML = "".concat(data[iter].Question);
+        //Renders the card text
+        renderCard();
     })
         .catch(function (error) {
         console.error('Error fetching cards:', error);
     });
-    cardContainer.addEventListener('click', function () {
-        if (cardText.innerHTML == "".concat(cards[iter].Question)) {
-            cardText.innerHTML = "".concat(cards[iter].Answer);
+    //Adds an event listener for keyboard shortcuts
+    document.addEventListener("keyup", function (event) {
+        //Will flip card on space bar press
+        if (event.key === " ") {
+            flipCard(cardContainer);
         }
-        else {
-            cardText.innerHTML = "".concat(cards[iter].Question);
+        //Switches the visible card to the previous card on left arrow press
+        if (event.key === "ArrowLeft") {
+            previousCard();
+        }
+        //Switches the visible card to the next card on right arrow press
+        if (event.key === "ArrowRight") {
+            nextCard();
+        }
+        //Shuffles the cards on s key press
+        if (event.key === "s") {
+            shuffleCards();
         }
     });
 };
 //This is an implementation of the Fisher-Yates shuffle algorithm 
 //https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
 function shuffleCards() {
-    console.log("Shuffling cards");
+    //Makes the front of the card visible before the shuffle takes place
+    initalizeCardState();
+    //Iterates through card array
     for (var i = cards.length - 1; i > 0; i--) {
+        //Finds a random index between 0 and i
         var j = Math.floor(Math.random() * (i + 1));
+        //Swaps the location of the cards at index i and index j
         var temp = cards[i];
         cards[i] = cards[j];
         cards[j] = temp;
     }
+    //Rerenders card text
     renderCard();
+    //Notifies user that cards were shuffled
     var notyf = new Notyf();
     notyf.success('Cards Shuffled');
 }
+//Progresses the visible card to the next card in cards
 function nextCard() {
-    if (iter + 1 < cards.length) {
-        iter++;
-    }
-    else {
-        iter = 0;
-    }
+    initalizeCardState();
+    //Loops back to index 0 if iter goes out of the bounds of cards
+    iter = (iter + 1) % cards.length;
     renderCard();
 }
+//Progresses the visible card to the next card in cards
 function previousCard() {
+    initalizeCardState();
+    //Loops back to index 0 if iter goes out of the bounds of cards
     if (iter > 0) {
         iter--;
     }
@@ -58,6 +88,22 @@ function previousCard() {
     }
     renderCard();
 }
+//Displays the current cards text on the DOM
 function renderCard() {
-    cardText.innerHTML = "".concat(cards[iter].Question);
+    frontText.innerHTML = "".concat(cards[iter].Question);
+    backText.innerHTML = "".concat(cards[iter].Answer);
+}
+//Switches the card text and triggers the flipping animation 
+function flipCard(container) {
+    flipped = !flipped;
+    if (card) {
+        //Toggles flipped class on the card
+        card.classList.toggle('flipped');
+    }
+}
+//Sets the front of the card to be visible regarless of current state
+function initalizeCardState() {
+    if (flipped) {
+        flipCard(cardContainer);
+    }
 }

@@ -1,4 +1,4 @@
-
+/* This file provides styles for the create deck and deck pages */
 #deckTitle{
     color: #009360;
 }
@@ -26,11 +26,15 @@
 #editButton:hover{
     background-color: #142d80;
 }
+#replaceme{
+    margin-left: 5%;
+    
+}
 
 /*This removes the indentation of the list*/
 ul, ol {
-    padding-left: 0;
-    margin-left: 0;
+    margin: auto;
+    list-style: none;
 }
 .cards {
     padding-left: 20px; 
@@ -49,13 +53,22 @@ ul, ol {
     margin: 16px;
 }
 
-
-
-#addCardButtonContainer{
-    text-align: center;
+/* Styling for the delete a card button */
+.deleteButton{
+    background-color: #cb0202;
+    border: 0px;
+    float: right;
+    padding: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.deleteButton:hover{
+    border: solid 2px #FFFFFF;
 }
 
 
+
+/* The styles of a cards text */
 .cardSideText{
     background-color: #444c5d;
     padding: 8px;

@@ -1,11 +1,14 @@
-<div class="card">
-    
-    <li class="card">
-        <br>
-        <input type='text' required placeholder='Side 1' name="question[]"> 
-        <input type="text" required placeholder="Side 2" name="answer[]">
-    </li>
-</div>
+
+<li class="card">
+    <button class="deleteButton" type="button" onclick="deleteCard(this)"><img src="/static/img/delete-trash.svg" alt=""></button>
+
+    <br>
+    <h4>Side 1:</h4>  
+    <input required class="cardSideText" value="{{ .Question }}" name="question[]"></input>
+    <h4>Side 2:</h4>  
+    <input required class="cardSideText" value="{{ .Answer }}" name="answer[]"></input>
+</li>
+
 
 <button 
     id="replaceme"

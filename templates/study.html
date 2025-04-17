@@ -15,6 +15,7 @@
     
     <link rel="stylesheet" href="/static/notyf.min.css">
     <script src="/scripts/notyf.min.js"></script>
+    
 
 </head>
 <body>
@@ -24,9 +25,23 @@
    <h1>Study {{.Deck.Name}}</h1>
    <a href="/deck/{{.Deck.ID}}">Back To Deck</a>
     <button id="shuffleButton" onclick="shuffleCards()"><img src="/static/img/shuffle.svg" alt="shuffle Icon"></button>
-   <div id="cardContainer">
-        <p id="cardText"></p>
-   </div>
+   
+   
+
+   <div id="cardContainer" onclick="flipCard(this)">
+        <div id="card">
+            <div id="cardFront">
+                <p class="cardText" id="frontText"></p>
+            </div>
+
+            <div id="cardBack">
+                <p class="cardText" id="backText"></p>
+            </div>
+        </div>
+    </div>
+
+
+
    
     <div id="buttonContainer">
         <button onclick="previousCard()">Previous</button>
@@ -34,6 +49,6 @@
    </div>
    
 
-
+   
 </body>
 </html>

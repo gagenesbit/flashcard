@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="/static/pico.blue.css">
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="stylesheet" href="/static/createDeck.css">
+    <link rel="stylesheet" href="/static/notyf.min.css">
+
     <script src="/scripts/htmx.js"></script>
+    <script src="/scripts/deleteCard.js"></script>
+    <script src="/scripts/notyf.min.js"></script>
 </head>
 <body>
     <a href="/home"><img src="/static/img/book.svg" alt="Book svg"></a>
@@ -17,7 +21,7 @@
     </div>
    
    
-   <button id="studyButton"><a href="/deck/study/{{.Deck.ID}}">Study This Deck</a></button>
+    <a href="/deck/study/{{.Deck.ID}}"><button id="studyButton">Study This Deck</button></a>
     <br>
    <h3>Cards</h3>
    

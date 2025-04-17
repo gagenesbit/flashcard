@@ -1,4 +1,5 @@
 <form action="/deck/edit/{{.Deck.ID}}" method="post">
+    <a href="/deck/{{.Deck.ID}}"><button id="editButton">Discard Changes</button></a>
     <button id="editButton">Save Changes</button>
 
     <ul id="cards" hx-target="this" hx-swap="outerHTML">
@@ -6,11 +7,12 @@
         {{ range .Cards }}
             
             <li class="card">
+                <button class="deleteButton" type="button" onclick="deleteCard(this)"><img src="/static/img/delete-trash.svg" alt=""></button>
                 <br>
                 <h4>Side 1:</h4>  
-                <input class="cardSideText" value="{{ .Question }}" name="question[]"></input>
+                <input required class="cardSideText" value="{{ .Question }}" name="question[]"></input>
                 <h4>Side 2:</h4>  
-                <input class="cardSideText" value="{{ .Answer }}" name="answer[]"></input>
+                <input required class="cardSideText" value="{{ .Answer }}" name="answer[]"></input>
             </li>
         {{ end }}
         <div id="addCardButtonContainer">
